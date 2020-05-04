@@ -1,2 +1,3 @@
-# team-management-system
-Blazor PoC
+# Team management System
+
+This a simple pet project in which I get familiar with Blazor framework.
