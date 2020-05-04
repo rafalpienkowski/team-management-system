@@ -1,0 +1,32 @@
+@inherits SelectedPlayerDetailsBase
+@attribute [Authorize]
+
+@if (!string.IsNullOrEmpty(SelectedPlayer.Image))
+{
+    <img src="@SelectedPlayer.Image" class="rounded player-image" alt="loading"/>
+}
+<div class="text-center">
+    <p class="font-weight-bold text-uppercase">
+        @SelectedPlayer.Name
+    </p>
+</div>
+<div style="margin-left: 25%">
+    <div class="container">
+        <div class="row">
+            <div  class="col-3">Birthday:</div>
+            <div  class="col-9">@SelectedPlayer.Birth.ToShortDateString()</div>
+        </div>
+        <div class="row">
+            <div  class="col-3">Heigh:</div>
+            <div  class="col-9">@SelectedPlayer.Height cm</div>
+        </div>
+        <div class="row">
+            <div  class="col-3">Position:</div>
+            <div  class="col-9">@SelectedPlayer.Position</div>
+        </div>
+        <div class="row">
+            <div  class="col-3">Country:</div>
+            <div  class="col-9">@SelectedPlayer.Country</div>
+        </div>
+    </div>
+</div>

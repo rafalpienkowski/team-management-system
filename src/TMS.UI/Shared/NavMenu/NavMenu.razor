@@ -1,0 +1,46 @@
+﻿@inherits NavMenuBase
+
+<div class="top-row pl-4 navbar navbar-dark">
+    <a class="navbar-brand" href="">Team Management System</a>
+    <button class="navbar-toggler" @onclick="ToggleNavMenu">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+</div>
+
+<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+    <img src="images/logo.png" width="93" height="133" class="rounded mx-auto d-block" style="margin-top: 15px" alt="logo"/>
+    <ul class="nav flex-column">
+        <AuthorizeView>
+            <Authorized>
+                <li class="nav-item px-3">
+                    <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                        <span class="oi oi-home" aria-hidden="true"></span> Home
+                    </NavLink>
+                </li>
+                @foreach (var item in Items)
+                {
+                    <li class="nav-item px-3">
+                        <NavLink class="nav-link" href="@item.Action">
+                            <span class="oi oi-list-rich" aria-hidden="true"></span> @item.Name
+                        </NavLink>
+                    </li>
+                }
+                <li class="nav-item px-3">
+                    <NavLink class="nav-link" href="Logout">
+                        <span class="oi oi-list-rich" aria-hidden="true"></span> Log out
+                        (@context.User.Claims.FirstOrDefault(c => c.Type == "name")?.Value)
+                    </NavLink>
+                </li>
+            </Authorized>
+            <NotAuthorized>
+                <ul class="nav flex-column">
+                    <li class="nav-item px-3">
+                        <NavLink class="nav-link" href="Login">
+                            <span class="oi oi-list-rich" aria-hidden="true"></span> Log in
+                        </NavLink>
+                    </li>
+                </ul>
+            </NotAuthorized>
+        </AuthorizeView>
+    </ul>
+</div>

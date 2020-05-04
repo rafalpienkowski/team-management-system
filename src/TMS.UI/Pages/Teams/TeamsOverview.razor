@@ -1,0 +1,39 @@
+@page "/teams"
+@inherits TeamsOverviewBase
+@attribute [Authorize]
+
+<h1 class="page-title">Teams</h1>
+
+@if (Teams == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Team</th>
+            <th>League</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var team in Teams)
+        {
+            <tr>
+                <td>@team.Name</td>
+                <td>@team.League</td>
+                <td>
+                    @foreach(var link in team.Links)
+                    {
+                        <a href="@($"{link.Href}")" class="btn btn-dark table-btn">
+                            <i class="fas fa-info-circle"></i> @link.Rel
+                        </a>
+                    }
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}

@@ -1,0 +1,60 @@
+@page "/games"
+@inherits GamesOverviewBase
+
+<h1 class="page-title">Games</h1>
+
+@if (Games == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    @if (!IsAuthorized)
+    {
+        <NotAuthorizedComponent></NotAuthorizedComponent>
+    }
+    else
+    {
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th class="text-center">Date</th>
+                <th class="text-center">Score</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var game in Games)
+            {
+                <tr>
+                    <td class="text-center">@game.Date.ToShortDateString() @game.Date.ToShortTimeString()</td>
+                    <td>
+                        <ScoreComponent Home="@game.Home" Guest="@game.Guest"></ScoreComponent>
+                    </td>
+                    <td>
+                        <button class="btn btn-dark table-btn" @onclick="(e) => OpenGameDialog(game)">Edit</button>
+                        <button class="btn btn-dark table-btn" @onclick="(e) => game.ShowHallDetails = !game.ShowHallDetails">Hall</button>
+                    </td>
+                </tr>
+                @if (game.ShowHallDetails)
+                {
+                    <tr>
+                        <td colspan="3">
+                            <div style="height: 400px">
+                                <Map Zoom="1" Markers="@game.Markers"></Map>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            }
+            </tbody>
+        </table>
+        
+        <div class="text-right">
+            <button @onclick="OpenGameDialog" class="btn btn-dark">&nbsp;&nbsp;+&nbsp;&nbsp;</button>
+        </div>
+        
+
+        <GameDialog @ref="GameDialog" CloseEventCallback="@GameDialog_OnDialogClose"></GameDialog>
+    }
+}

@@ -1,0 +1,52 @@
+@page "/teams/{teamId:int}/players"
+@inherits PlayersInTeamBase
+@attribute [Authorize]
+
+<h1 class="page-title">Players</h1>
+
+@if (Players == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-6">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var player in Players)
+                    {
+                        <tr @onmouseover="@(e => SetPlayer(player))">
+                            <td>@player.Number</td>
+                            <td>@player.Name</td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-6">
+                @if (SelectedPlayer != null)
+                {
+                    <SelectedPlayerDetails SelectedPlayer="SelectedPlayer"></SelectedPlayerDetails>
+                }
+            </div>
+        </div>
+    </div>
+}
+
+<style>
+    .player-image {
+        display: block;
+        width: 280px;
+        height: 413px;
+        margin-left: 25%;
+        margin-top: 15%;
+    }
+</style>
